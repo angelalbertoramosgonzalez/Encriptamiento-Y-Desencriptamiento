@@ -1,0 +1,202 @@
+using System;
+
+namespace Matrices
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+
+        {
+            int lim, X = 0;
+            int num1, num2, num3, num12, num22, num32, s1, s2, s3, total;
+            string tex;
+            //Menu
+
+            byte metodo;
+            Console.WriteLine("Ingresa Metodo");
+            metodo = Convert.ToByte(Console.ReadLine());
+            switch (metodo)
+            {
+                case 1: Console.WriteLine("Haz Elegido Encriptamiento"); break;
+            }
+            //ENCRIPTAMIENTO
+
+            int[] arrayCifrado =
+                 { 1, 2, 1 ,   0, -1, 3 ,   2, 1, 0  };
+            Console.WriteLine("---------------------------------------------");
+            Console.WriteLine("ingrese El Texto");
+            tex = Console.ReadLine();
+            lim = tex.Length;
+            if (lim != 0)
+            {
+                if (lim % 3 == 1)
+                {
+                    tex = tex.Insert(lim, "  ");
+                    lim = tex.Length;
+                }
+                else if (lim % 3 == 2)
+                {
+                    tex = tex.Insert(lim, " ");
+                    lim = tex.Length;
+                }
+                else
+                {
+                    lim = tex.Length;
+                }
+            }
+            else
+            {
+                Console.WriteLine("no existe texto alguno");
+            }
+            char[] arrayT = new char[lim];
+            char[] arrayT2 = new char[lim];
+            int[] arrayN = new int[lim];
+
+            int[] arrayAux = new int[lim];
+            int[] arrayAux2 = new int[lim];
+
+            
+            for (int i = 0; i < lim; i++)
+            {
+                arrayT[i] = char.Parse(tex.Substring(i, 1));
+            }
+
+            for (int i = 0; i < arrayT.Length; i++)
+            {
+
+                arrayN[i] = (arrayT[i]);
+            }
+
+            for (int i = 0; i < arrayN.Length; i += 3)
+            {
+
+                for (int j = 0; j < 3; j++)
+                {
+                    num1 = arrayCifrado[j];
+                    num2 = arrayCifrado[j + 3];
+                    num3 = arrayCifrado[j + 6];
+                    num12 = arrayN[i];
+                    num22 = arrayN[i + 1];
+                    num32 = arrayN[i + 2];
+                    s1 = num1 * num12;
+
+                    s2 = num2 * num22;
+                    s3 = num3 * num32;
+                    total = s1 + s2 + s3;
+                    arrayAux[X] = total;
+                    if (X < arrayAux.Length)
+                    {
+                        X++;
+                    }
+
+                }
+
+            }
+
+
+            Console.WriteLine("\ncadena de texto encriptada\n");
+
+            //cadena encriptada 
+
+            for (int y = 0; y < arrayAux2.Length; y++)
+            {
+                Console.Write(arrayAux[y] + " ");
+
+            }
+
+
+            //DESENCRIPTAMIENTO
+            switch (metodo)
+            {
+                case 2: Console.WriteLine("Haz Elegido Desencriptamiento"); break;
+                default: Console.WriteLine("No Existe Esa Opcion"); break;
+            }
+
+            int[] Decifrao =
+           {    -3,1,7,  6,-2,-3,        2,3,-1  };
+            Console.WriteLine("\n\ncadena de texto desencriptada \n");
+            X = 0;
+            for (int i = 0; i < arrayN.Length; i += 3)
+            {
+
+                for (int j = 0; j < 3; j++)
+                {
+                    num1 = Decifrao[j];
+                    num2 = Decifrao[j + 3];
+                    num3 = Decifrao[j + 6];
+                    num12 = arrayAux[i];
+                    num22 = arrayAux[i + 1];
+                    num32 = arrayAux[i + 2];
+                    s1 = num1 * num12;
+                    s2 = num2 * num22;
+                    s3 = num3 * num32;
+                    total = (s1 + s2 + s3) / 11;
+
+                    arrayAux2[X] = total;
+                    if (X < arrayAux2.Length)
+                    {
+                        X++;
+                    }
+
+                }
+
+            }
+
+
+            for (int i = 0; i < arrayAux2.Length; i++)
+            {
+                arrayT2[i] = NAS(arrayAux2[i]);
+
+
+            }
+
+            foreach (var x in arrayT2)
+            {
+                Console.Write(x);
+            }
+
+
+           
+
+
+        }
+
+
+
+
+        public static int SAN(char carac)
+        {
+            char[] abc = { ' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '.' };
+            int num = -1;
+            for (int j = 0; j < abc.Length; j++)
+            {
+                if (carac.Equals(abc[j]))
+                {
+                    num = j;
+                }
+
+            }
+
+
+            return num;
+        }
+
+        public static char NAS(int n)
+        {
+            char[] abc = { ' ', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '.' };
+            char s = '#';
+
+            if (n < 30 && n > -1)
+            {
+
+                s = abc[n];
+
+            }
+
+            return s;
+
+            
+        }
+
+    }
+}
